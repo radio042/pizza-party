@@ -6,6 +6,8 @@ import org.apache.camel.builder.RouteBuilder;
 
 public class ScatterGatherRoutes extends RouteBuilder {
 
+    // todo: expect {"pizza-type": string, "response": boolean}
+
     public static final String AGREED_UPON_AGGREGATION_HEADER = "pizza-type";
     public static final String AGREED_UPON_ACCEPT = "yep";
     public static final String AGREED_UPON_DECLINE = "nope";
@@ -21,9 +23,10 @@ public class ScatterGatherRoutes extends RouteBuilder {
 
         from("kafka:responses?brokers=localhost:29092")
                 .routeId("gather")
+                .setHeader(AGREED_UPON_AGGREGATION_HEADER, simple("${in.body.pizza-type}"))
                 .aggregate(header(AGREED_UPON_AGGREGATION_HEADER), newConsensusStrategy())
                 .completionSize(3) // because we expect a response from 3 services
-                .log("Do we all agree on ordering ${header.id} - ${body}");
+                .log("Do we all agree on ordering ${header.pizza-type} - ${in.body}");
     }
 
     private AggregationStrategy newConsensusStrategy() {
