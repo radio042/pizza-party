@@ -6,6 +6,10 @@ import org.apache.camel.builder.RouteBuilder;
 
 public class ScatterGatherRoutes extends RouteBuilder {
 
+    public static final String AGREED_UPON_AGGREGATION_HEADER = "pizza-type";
+    public static final String AGREED_UPON_ACCEPT = "yep";
+    public static final String AGREED_UPON_DECLINE = "nope";
+
     @Override
     public void configure() throws Exception {
         from("kafka:suggestions?brokers=localhost:29092")
@@ -17,19 +21,24 @@ public class ScatterGatherRoutes extends RouteBuilder {
 
         from("kafka:responses?brokers=localhost:29092")
                 .routeId("gather")
-                .aggregate(newConsensusStrategy())
-                .body()
-                .completionSize(3)
-                .to("mock:result");
+                .aggregate(header(AGREED_UPON_AGGREGATION_HEADER), newConsensusStrategy())
+                .completionSize(3) // because we expect a response from 3 services
+                .log("Do we all agree on ordering ${header.id} - ${body}");
     }
 
     private AggregationStrategy newConsensusStrategy() {
-
         return new AggregationStrategy() {
             @Override
             public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-                // todo
-                return null;
+                String firstResponse = oldExchange.getIn().getBody(String.class);
+                String secondResponse = newExchange.getIn().getBody(String.class);
+                String newExchangeBody = firstResponse != null
+                        && firstResponse.equals(secondResponse)
+                        && firstResponse.equals(AGREED_UPON_ACCEPT)
+                        ? AGREED_UPON_ACCEPT
+                        : AGREED_UPON_DECLINE;
+                newExchange.getIn().setBody(newExchangeBody);
+                return newExchange;
             }
         };
     }
