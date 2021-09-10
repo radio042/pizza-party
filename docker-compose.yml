@@ -7,7 +7,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
-  
+
   kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
@@ -21,3 +21,16 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-create-topics:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-create-topics
+    container_name: kafka-create-topics
+    depends_on:
+      - kafka
+    command: "bash -c 'cub kafka-ready -b kafka:9092 1 20 && \
+                       kafka-topics --zookeeper zookeeper:2181 --create --topic in --partitions 1 --replication-factor 1 && \
+                       kafka-topics --zookeeper zookeeper:2181 --create --topic out --partitions 1 --replication-factor 1 && \
+                       kafka-topics --zookeeper zookeeper:2181 --create --topic suggestions --partitions 1 --replication-factor 1 && \
+                       kafka-topics --zookeeper zookeeper:2181 --create --topic responses --partitions 1 --replication-factor 1 && \
+                       sleep infinity'"
