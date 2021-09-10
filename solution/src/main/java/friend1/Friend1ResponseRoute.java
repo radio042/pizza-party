@@ -17,7 +17,13 @@ public class Friend1ResponseRoute extends RouteBuilder {
         from("kafka:suggestions?brokers=localhost:29092")
                 .routeId("friend1")
                 .process(addPizzaTypeHeader())
-                .pollEnrich().simple("file:data?noop=true&fileName=friend-1-pizza-preferences.txt", String.class)
+                .pollEnrich("file:data?noop=true&fileName=friend-1-pizza-preferences.txt")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        System.out.println(exchange.getIn().getBody(String.class));
+                    }
+                })
                 .process(createResponse())
                 .to("kafka:responses?brokers=localhost:29092");
     }
