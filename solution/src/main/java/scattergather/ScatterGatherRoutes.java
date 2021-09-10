@@ -43,7 +43,7 @@ public class ScatterGatherRoutes extends RouteBuilder {
             @Override
             public void process(Exchange exchange) throws Exception {
                 String suggestion = exchange.getIn().getBody(String.class);
-                String transformedMessage = String.format("{\"pizza-type\": %s}", suggestion);
+                String transformedMessage = String.format("{\"pizza-type\": \"%s\"}", suggestion);
                 exchange.getIn().setBody(transformedMessage);
             }
         };
