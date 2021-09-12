@@ -35,7 +35,7 @@ public class GatherRoute extends RouteBuilder {
     private void renderResponse(Exchange exchange) {
         boolean consensus = exchange.getIn().getBody(Boolean.class);
         String pizzaType = exchange.getIn().getHeader("pizza-type", String.class);
-        String transformedMessage = String.format("%s sind mit %s einverstanden.",
+        String transformedMessage = String.format("%s Freunde sind mit %s einverstanden.",
                 consensus ? "Alle" : "Nicht alle",
                 pizzaType);
         exchange.getIn().setBody(transformedMessage);
