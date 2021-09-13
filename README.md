@@ -1,7 +1,37 @@
 # pizza-party
-Which pizza type do all services agree on? An Apache Camel Project for pizza selection among micro services using the scatter-gather EIP.
+Which pizza type do all services agree on? An Apache Camel Project for pizza selection among microservices using the scatter-gather EIP.
 
-## Starting, trying out and stopping Kafka
+Imagine you meet up with a few friends, and you have to select a pizza together.
+Everybody has different pizza preferences. 
+One way to select a pizza is to make a suggestion and aggregate each friend's response to it.
+Unfortunately, in this scenario you cannot communicate with your friends in common channels, such as personally or through social media.
+Fortunately, your friends have lists of their favourite pizza types and can build Camel routes that consume suggestion from a Kafka topic and respond in another Kafka topic.
+Unfortunately, they don't have time to build the routes, so you must build them. 
+They provide lists of their favourite pizza types though.
+
+To build the whole system feel free to start from [exercise](exercise).
+
+To explore one way to build the system feel free to browse [solution](solution).
+
+## System
+
+The system consists of the following components.
+
+### Kafka with four topics:
+- in: suggestions are written here
+- suggestions: internal topic for the messages scattered to the friend routes
+- responses: internal topic for the friend responses
+- out: messages here tell you if all friend approve of the suggested pizza
+
+### Quarkus service with dour Camel routes:
+- Scatter: consuming suggestions, e.g. "4 Käse" and sending them in the aligned message format `{ "pizza-type": string }` to the friend routes
+- 2 friend routes: consuming suggestions, checking if the suggestion is part of the preferred pizza types and responding in the aligned message format `{ "pizza-type": string, "approval": boolean}` 
+- Gather: aggregating the responses of all friends and producing a corresponding message to the output topic in a human-friendly way, e.g. "Nicht alle Freunde sind mit 4 Käse einverstanden"
+
+### Overview
+![scenario](camel-overview.png)
+
+### Starting, trying out and stopping Kafka
 
 1. Start containers and create topics
 ```

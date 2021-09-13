@@ -20,24 +20,24 @@ public class GatherRoute extends RouteBuilder {
 
     private AggregationStrategy checkConsensus() {
         return (oldExchange, newExchange) -> {
-            boolean approvalInNewResponse = newExchange.getIn().getHeader("approval", Boolean.class);
+            boolean approvalInNewResponse = newExchange.getMessage().getHeader("approval", Boolean.class);
             if (oldExchange == null) {
-                newExchange.getIn().setBody(approvalInNewResponse);
+                newExchange.getMessage().setBody(approvalInNewResponse);
             } else {
-                boolean approvalInOldResponse = oldExchange.getIn().getHeader("approval", Boolean.class);
+                boolean approvalInOldResponse = oldExchange.getMessage().getHeader("approval", Boolean.class);
                 boolean bothApprove = approvalInNewResponse && approvalInOldResponse;
-                newExchange.getIn().setBody(bothApprove);
+                newExchange.getMessage().setBody(bothApprove);
             }
             return newExchange;
         };
     }
 
     private void renderResponse(Exchange exchange) {
-        boolean consensus = exchange.getIn().getBody(Boolean.class);
-        String pizzaType = exchange.getIn().getHeader("pizza-type", String.class);
+        boolean consensus = exchange.getMessage().getBody(Boolean.class);
+        String pizzaType = exchange.getMessage().getHeader("pizza-type", String.class);
         String transformedMessage = String.format("%s Freunde sind mit %s einverstanden.",
                 consensus ? "Alle" : "Nicht alle",
                 pizzaType);
-        exchange.getIn().setBody(transformedMessage);
+        exchange.getMessage().setBody(transformedMessage);
     }
 }

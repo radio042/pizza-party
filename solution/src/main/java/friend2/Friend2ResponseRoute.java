@@ -20,19 +20,19 @@ public class Friend2ResponseRoute extends RouteBuilder {
 
     private AggregationStrategy comparePizzaType() {
         return (oldExchange, newExchange) -> {
-            String pizzaType = oldExchange.getIn().getHeader("pizza-type", String.class);
-            String preferences = newExchange.getIn().getBody(String.class);
+            String pizzaType = oldExchange.getMessage().getHeader("pizza-type", String.class);
+            String preferences = newExchange.getMessage().getBody(String.class);
             Boolean preference = preferences.contains(pizzaType);
-            oldExchange.getIn().setBody(preference);
+            oldExchange.getMessage().setBody(preference);
             return oldExchange;
         };
     }
 
     private void renderResponse(Exchange exchange) {
-        String pizzaType = exchange.getIn().getHeader("pizza-type", String.class);
-        boolean preference = exchange.getIn().getBody(Boolean.class);
+        String pizzaType = exchange.getMessage().getHeader("pizza-type", String.class);
+        boolean preference = exchange.getMessage().getBody(Boolean.class);
         String response = String.format("{\"pizza-type\": \"%s\", \"approval\": %s}", pizzaType, preference);
-        exchange.getIn().setBody(response);
+        exchange.getMessage().setBody(response);
     }
 
 }

@@ -14,8 +14,8 @@ public class ScatterRoute extends RouteBuilder {
     }
 
     private void renderResponse(Exchange exchange) {
-        String suggestion = exchange.getIn().getBody(String.class);
+        String suggestion = exchange.getMessage().getBody(String.class);
         String transformedMessage = String.format("{\"pizza-type\": \"%s\"}", suggestion);
-        exchange.getIn().setBody(transformedMessage);
+        exchange.getMessage().setBody(transformedMessage);
     }
 }
