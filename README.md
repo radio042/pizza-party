@@ -1,5 +1,5 @@
 # pizza-party
-Which pizza type do all services agree on? An Apache Camel Project for pizza selection among microservices using the [scatter-gather](https://www.enterpriseintegrationpatterns.com/patterns/messaging/BroadcastAggregate.html) EIP.
+Which pizza type do all services agree on? An Apache Camel Project for pizza selection among microservices using the [scatter-gather EIP](https://www.enterpriseintegrationpatterns.com/patterns/messaging/BroadcastAggregate.html).
 
 Imagine you meet up with a few friends, and you have to order pizza.
 However, you and your friends have different pizza preferences. 
