@@ -1,13 +1,13 @@
 # pizza-party
-Which pizza type do all services agree on? An Apache Camel Project for pizza selection among microservices using the scatter-gather EIP.
+Which pizza type do all services agree on? An Apache Camel Project for pizza selection among microservices using the [scatter-gather](https://www.enterpriseintegrationpatterns.com/patterns/messaging/BroadcastAggregate.html) EIP.
 
 Imagine you meet up with a few friends, and you have to order pizza.
 However, you and your friends have different pizza preferences. 
 One way to select a pizza is to make a suggestion and aggregate each friend's response.
 Unfortunately, in this scenario you cannot communicate with your friends in common channels, such as personally or through social media.
-Fortunately, your friends have lists of their favourite pizza types and can build Camel routes that consume suggestion from a Kafka topic and respond in another Kafka topic.
+Fortunately, your friends have lists of favourite pizza types and can build Camel routes that consume suggestions from a Kafka topic and respond in another Kafka topic.
 Unfortunately, they don't have time to build the routes, so you have to build them. 
-They provide lists of their favourite pizza types though.
+Your friends provide lists of their favourite pizza types though.
 
 To build the whole system feel free to start from [exercise](exercise).
 
