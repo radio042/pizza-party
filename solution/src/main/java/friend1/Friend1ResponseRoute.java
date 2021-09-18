@@ -4,6 +4,9 @@ import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 
+import static util.PizzaPartyHelper.checkApproval;
+import static util.PizzaPartyHelper.createFriendResponseMessage;
+
 public class Friend1ResponseRoute extends RouteBuilder {
 
     @Override
@@ -22,8 +25,8 @@ public class Friend1ResponseRoute extends RouteBuilder {
         return (oldExchange, newExchange) -> {
             String pizzaType = oldExchange.getMessage().getHeader("pizza-type", String.class);
             String preferences = newExchange.getMessage().getBody(String.class);
-            Boolean preference = preferences.contains(pizzaType);
-            oldExchange.getMessage().setBody(preference);
+            Boolean approval = checkApproval(preferences, pizzaType);
+            oldExchange.getMessage().setBody(approval);
             return oldExchange;
         };
     }
@@ -31,7 +34,7 @@ public class Friend1ResponseRoute extends RouteBuilder {
     private void renderResponse(Exchange exchange) {
         String pizzaType = exchange.getMessage().getHeader("pizza-type", String.class);
         boolean preference = exchange.getMessage().getBody(Boolean.class);
-        String response = String.format("{\"pizza-type\": \"%s\", \"approval\": %s}", pizzaType, preference);
+        String response = createFriendResponseMessage(pizzaType, preference);
         exchange.getMessage().setBody(response);
     }
 

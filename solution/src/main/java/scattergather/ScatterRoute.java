@@ -3,6 +3,8 @@ package scattergather;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 
+import static util.PizzaPartyHelper.createSuggestionMessage;
+
 public class ScatterRoute extends RouteBuilder {
 
     @Override
@@ -15,7 +17,7 @@ public class ScatterRoute extends RouteBuilder {
 
     private void renderResponse(Exchange exchange) {
         String suggestion = exchange.getMessage().getBody(String.class);
-        String transformedMessage = String.format("{\"pizza-type\": \"%s\"}", suggestion);
+        String transformedMessage = createSuggestionMessage(suggestion);
         exchange.getMessage().setBody(transformedMessage);
     }
 }

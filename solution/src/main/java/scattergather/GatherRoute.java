@@ -4,6 +4,9 @@ import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 
+import static util.PizzaPartyHelper.createAggregatedResponseMessage;
+import static util.PizzaPartyHelper.obtainExchangeWhereBodyTellsWhetherAllExchangesHaveTheirHeaderSetToTrue;
+
 public class GatherRoute extends RouteBuilder {
 
     @Override
@@ -19,25 +22,15 @@ public class GatherRoute extends RouteBuilder {
     }
 
     private AggregationStrategy checkConsensus() {
-        return (oldExchange, newExchange) -> {
-            boolean approvalInNewResponse = newExchange.getMessage().getHeader("approval", Boolean.class);
-            if (oldExchange == null) {
-                newExchange.getMessage().setBody(approvalInNewResponse);
-            } else {
-                boolean approvalInOldResponse = oldExchange.getMessage().getHeader("approval", Boolean.class);
-                boolean bothApprove = approvalInNewResponse && approvalInOldResponse;
-                newExchange.getMessage().setBody(bothApprove);
-            }
-            return newExchange;
-        };
+        return (oldExchange, newExchange)
+                -> obtainExchangeWhereBodyTellsWhetherAllExchangesHaveTheirHeaderSetToTrue(
+                        oldExchange, newExchange, "approval");
     }
 
     private void renderResponse(Exchange exchange) {
         boolean consensus = exchange.getMessage().getBody(Boolean.class);
         String pizzaType = exchange.getMessage().getHeader("pizza-type", String.class);
-        String transformedMessage = String.format("%s Freunde sind mit %s einverstanden.",
-                consensus ? "Alle" : "Nicht alle",
-                pizzaType);
+        String transformedMessage = createAggregatedResponseMessage(consensus, pizzaType);
         exchange.getMessage().setBody(transformedMessage);
     }
 }
