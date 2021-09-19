@@ -23,10 +23,10 @@ The system consists of the following components.
 - responses: internal topic for the friend responses
 - out: messages here tell you if all friend approve of the suggested pizza
 
-### Quarkus service with dour Camel routes:
-- Scatter: consuming suggestions, e.g. "4 Käse" and sending them in the aligned message format `{ "pizza-type": string }` to the friend routes
-- 2 friend routes: consuming suggestions, checking if the suggestion is part of the preferred pizza types and responding in the aligned message format `{ "pizza-type": string, "approval": boolean}` 
-- Gather: aggregating the responses of all friends and producing a corresponding message to the output topic in a human-friendly way, e.g. "Nicht alle Freunde sind mit 4 Käse einverstanden"
+### Quarkus application with four Camel routes:
+- Scatter: consuming suggestions, e.g. "4 Käse" and sending them in an _agreed upon message format_ to the friend routes. Example: `{ "pizza-type": string }`.
+- 2 friend routes: consuming suggestions, checking if the suggestion is part of the preferred pizza types and responding in an _agreed upon message format_. Example: `{ "pizza-type": string, "approval": boolean}`.
+- Gather: aggregating the responses of all friends and producing a corresponding message to the output topic in a human-friendly way, e.g. "Nicht alle Freunde sind mit 4 Käse einverstanden".
 
 ### Overview
 ![scenario](camel-overview.png)
@@ -44,7 +44,7 @@ $ docker compose up -d
  - Container kafka-create-topics      Started  
 ```
 
-2. After a few seconds the topics schould be created:
+2. After a few seconds the topics should be created:
 ```
 $ docker exec pizza-party_kafka_1 kafka-topics --list --bootstrap-server localhost:29092
 
@@ -72,7 +72,7 @@ $ docker exec -it pizza-party_kafka_1 kafka-console-producer --topic in --bootst
 To read a message from the topic "in", where the message "hello" was produced in the previous step:
 - open the console consumer for this topic
 - see the messages
-- exit the console conszmer with ctrl+c
+- exit the console consumer with ctrl+c
 ```
 $ docker exec pizza-party_kafka_1 kafka-console-consumer --topic in --bootstrap-server localhost:29092 --from-beginning
 
