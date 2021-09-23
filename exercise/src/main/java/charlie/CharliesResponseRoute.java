@@ -1,8 +1,8 @@
-package friend1;
+package charlie;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class Friend1ResponseRoute extends RouteBuilder {
+public class CharliesResponseRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {

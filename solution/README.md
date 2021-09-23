@@ -18,10 +18,10 @@
    1. Open a new terminal session and `cd` into the `pizza-party/solution/` folder
    1. Start the application: `mvn clean compile quarkus:dev`
 3. Suggest a pizza for the party
-   1. Negative case: Neither Friend 1 nor Friend 2 likes the pizza type **Hawaii**. That is, Hawaii is not present in either [friend-1-pizza-preferences.txt](src/main/resources/friend-1-pizza-preferences.txt) or [friend-2-pizza-preferences.txt](src/main/resources/friend-2-pizza-preferences.txt). Try suggesting this pizza type:
+   1. Negative case: Neither Friend 1 nor Friend 2 likes the pizza type **Hawaii**. That is, Hawaii is not present in either [bob-pizza-preferences.txt](src/main/resources/bob-pizza-preferences.txt) or [charlie-pizza-preferences.txt](src/main/resources/charlie-pizza-preferences.txt). Try suggesting this pizza type:
       1. Write "**Hawaii**" in the console producer
       2. Verify that the following message was produced in the output topic: "**Nicht alle Freunde sind mit Hawaii einverstanden.**"
-   2. Positive case: Both Friend 1 and Friend 2 like the pizza type **Margherita**. That is, Margherita is present in both [friend-1-pizza-preferences.txt](src/main/resources/friend-1-pizza-preferences.txt) and [friend-2-pizza-preferences.txt](src/main/resources/friend-2-pizza-preferences.txt). Try suggesting this pizza type:
+   2. Positive case: Both Friend 1 and Friend 2 like the pizza type **Margherita**. That is, Margherita is present in both [bob-pizza-preferences.txt](src/main/resources/bob-pizza-preferences.txt) and [charlie-pizza-preferences.txt](src/main/resources/charlie-pizza-preferences.txt). Try suggesting this pizza type:
       1. Write "**Margherita**" in the console producer
       2. Verify that the following message was produced in the output topic: "**Alle Freunde sind mit Margherita einverstanden.**"
 4. Clean up

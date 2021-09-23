@@ -10,7 +10,7 @@ public class ScatterRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("kafka:in?brokers=localhost:29092")
-                .routeId("scatter")
+                .routeId("solution-scatter")
                 .process(this::renderResponse)
                 .to("kafka:suggestions?brokers=localhost:29092");
     }

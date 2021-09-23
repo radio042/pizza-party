@@ -12,7 +12,7 @@ public class GatherRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("kafka:responses?brokers=localhost:29092")
-                .routeId("gather")
+                .routeId("solution-gather")
                 .setHeader("pizza-type").jsonpath("$.pizza-type", String.class)
                 .setHeader("approval").jsonpath("$.approval", Boolean.class)
                 .aggregate(header("pizza-type"), checkConsensus())

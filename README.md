@@ -24,12 +24,12 @@ The system consists of the following components.
 - out: messages here tell you if all friend approve of the suggested pizza
 
 ### Quarkus application with four Camel routes:
-- Scatter: consuming suggestions, e.g. "4 Käse" and sending them in an _agreed upon message format_ to the friend routes. Example: `{ "pizza-type": string }`.
+- Scatter: consuming suggestions, e.g. "Hawaii" and sending them in an _agreed upon message format_ to the friend routes. Example: `{ "pizza-type": string }`.
 - 2 friend routes: consuming suggestions, checking if the suggestion is part of the preferred pizza types and responding in an _agreed upon message format_. Example: `{ "pizza-type": string, "approval": boolean}`.
-- Gather: aggregating the responses of all friends and producing a corresponding message to the output topic in a human-friendly way, e.g. "Nicht alle Freunde sind mit 4 Käse einverstanden".
+- Gather: aggregating the responses of all friends and producing a corresponding message to the output topic in a human-friendly way, e.g. "Nicht alle Freunde sind mit Hawaii einverstanden".
 
 ### Overview
-![scenario](camel-overview.png)
+![scenario](pizza-party.png)
 
 ### Starting, trying out and stopping Kafka
 

@@ -19,8 +19,8 @@
    1. Start the application: `mvn clean compile quarkus:dev`
 3. Suggest a pizza for the party
    1. Nothing has been implemented here, but you can verify the system is set up properly:
-      1. Write "**4 Käse**" in the console producer
-      2. Verify that the following message was produced in the output topic: "**Keine Ahnung, ob die Pizza für alle passt, die Implementerung fehlt.**"
+      1. Write "**Hawaii**" in the console producer
+      2. Verify that the following message was produced in the output topic: "**Keine Ahnung, ob die Pizza für alle passt, die Implementierung fehlt.**"
 4. Clean up
    1. Run `docker compose down` in a terminal session in the pizza-party/ folder. This exits the console producers and consumers, so you don't need to exit each of them with ctrl+c
    2. Stop the Quarkus application with ctrl+c in the terminal session where it runs
@@ -31,4 +31,4 @@ To implement the system you would mostly need Camel-related code, but also some:
 - interface-related code, for example to create messages in an _agreed upon message format_
 
 You can avoid implementing Camel-unrelated stuff by using the methods in 
-[PizzaPartyHelper](src/main/java/util/PizzaPartyHelper.java) in various parts of the application
+[PizzaPartyHelper](src/main/java/util/PizzaPartyHelper.java) in various parts of the application.

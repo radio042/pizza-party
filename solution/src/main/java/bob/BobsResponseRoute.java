@@ -1,4 +1,4 @@
-package friend2;
+package bob;
 
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
@@ -7,15 +7,15 @@ import org.apache.camel.builder.RouteBuilder;
 import static util.PizzaPartyHelper.checkApproval;
 import static util.PizzaPartyHelper.createFriendResponseMessage;
 
-public class Friend2ResponseRoute extends RouteBuilder {
+public class BobsResponseRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
         from("kafka:suggestions?brokers=localhost:29092")
-                .routeId("friend2")
+                .routeId("solution-bob")
                 .setHeader("pizza-type").jsonpath("$.pizza-type", String.class)
                 .pollEnrich()
-                .simple("file:classes?noop=true&idempotent=false&fileName=friend-2-pizza-preferences.txt")
+                .simple("file:classes?noop=true&idempotent=false&fileName=bob-pizza-preferences.txt")
                 .aggregationStrategy(this::comparePizzaType)
                 .process(this::renderResponse)
                 .to("kafka:responses?brokers=localhost:29092");
