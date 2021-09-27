@@ -31,6 +31,8 @@ The system consists of the following components.
 ### Overview
 ![scenario](pizza-party.png)
 
+## Infrastructure
+
 ### Starting, trying out and stopping Kafka
 
 1. Start containers and create topics

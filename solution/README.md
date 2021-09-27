@@ -9,6 +9,8 @@
 1. Set up the infrastructure. For each of the steps below open a **new** terminal session in the pizza-party/ folder and run: 
    1. `docker compose up -d` to start all containers. To do this the Docker daemon must be running. To verify that the containers are up, and the 4 expected topics are created, wait for a few seconds and run `docker exec pizza-party_kafka_1 kafka-topics --list --bootstrap-server localhost:29092`.
    2. `docker exec -it pizza-party_kafka_1 kafka-console-producer --topic in --bootstrap-server localhost:29092` to start a Kafka console producer for the input topic. Here you write Kafka messages.
+         - If you are using GitBash with MINGW64, the following error might pop up: "_the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty'_".
+         In that case just prefix the command with 'winpty': `winpty docker exec -it pizza-party_kafka_1 kafka-console-producer --topic in --bootstrap-server localhost:29092`.
    3. to read the messages in the Kafka topics:
       1. `docker exec pizza-party_kafka_1 kafka-console-consumer --topic in --bootstrap-server localhost:29092 --from-beginning` to start a Kafka console consumer for the input topic. Here you see the messages in that topic.
       4. `docker exec pizza-party_kafka_1 kafka-console-consumer --topic suggestions --bootstrap-server localhost:29092 --from-beginning` to start a Kafka console consumer for the internal "suggestions" topic. Here you see the messages in that topic.
