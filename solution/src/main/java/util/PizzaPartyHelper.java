@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.Exchange;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class PizzaPartyHelper {
@@ -15,7 +16,7 @@ public class PizzaPartyHelper {
      * @return whether the pizza type is one of the preferred pizza types
      */
     public static Boolean checkApproval(String pizzaPreferences, String pizzaType) {
-        return pizzaPreferences.contains(pizzaType);
+        return Arrays.asList(pizzaPreferences.replace(", ", ",").split(",")).contains(pizzaType);
     }
 
     public static String createSuggestionMessage(String pizzaType) {
